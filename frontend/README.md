@@ -1,16 +1,14 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Team Performance Management SystemA full-stack employee performance management platform that enables organizations to manage employees, reviews, self-assessments, and manager feedback efficiently.📌 Setup & Run InstructionsPrerequisitesMake sure the following are installed on your system:Node.js (v18+ recommended)npm or yarnMongoDB (local installation or MongoDB Atlas)1. Clone the RepositoryBashgit clone https://github.com/simple3957/Team_Preformace_Management.git
+cd Team_Preformace_Management
+2. Install DependenciesBackendBashcd backend
+npm install
+FrontendBashcd frontend
+npm install
+3. Configure Environment VariablesCreate a .env file inside the backend folder.Example:Code snippetPORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+4. Start the ApplicationStart BackendBashcd backend
+npm run dev
+Start FrontendBashcd frontend
+npm start
+5. Access the ApplicationFrontend: http://localhost:3000Backend API: http://localhost:5000🛠️ Tech Stack & RationaleFrontendReact.js, Tailwind CSS, Axios, React RouterWhy? React was chosen for its component-based architecture and fast development workflow. Tailwind CSS enables rapid UI development with consistent styling.BackendNode.js, Express.jsWhy? Express provides a lightweight and scalable backend architecture suitable for REST APIs and rapid prototyping.Database / Storage LayerMongoDBWhy? Flexible schema design helped iterate quickly. It is ideal for handling nested review/self-assessment structures and reduced setup complexity within the 6-hour implementation constraint.Authentication & Password HashingJWT (JSON Web Tokens) & bcryptWhy? JWT provides stateless authentication. bcrypt was used for secure password hashing with salting to prevent plain-text storage.🏗️ Architectural OverviewThe project follows a modular MERN-stack architecture.Frontend Structurecomponents/ → Reusable UI componentspages/ → Route-level pagesservices/ → API calls and backend communicationcontext/ → Authentication and global state managementBackend Structurecontrollers/ → Business logicroutes/ → API endpointsmodels/ → MongoDB schemasmiddleware/ → Authentication and authorizationconfig/ → Database configuration🤖 How AI Tools Were UsedAI tools were used as productivity accelerators during development.AI Assistants Used: ChatGPT, GitHub Copilot.AI-Assisted Areas: Boilerplate API structure, CRUD scaffolding, React component structuring, JWT setup, and Tailwind styling suggestions.Hand-Written / Edited: Business logic, role handling, review workflows, database schema decisions, and integration debugging.Validation: All AI-generated code was manually reviewed, tested, and refactored to ensure readability and proper authentication flow.📌 AssumptionsUser Roles: Two primary roles exist: Employee and Manager. Managers are identified via a role field in the user schema.Manager Assignment: Employees reference their direct manager through a managerId field.Review Modeling: Performance reviews and self-assessments are modeled as separate entities to maintain flexibility and clear ownership of submissions.Scope: Single organization scope, internal usage only, and basic authentication requirements.⚖️ Trade-offsGiven the 6-hour implementation constraint, the following were deprioritized:Advanced RBAC: A simplified role model was used instead of fine-grained permissions.UI/UX Polish: Priority was given to functionality over animations and accessibility.Automated Testing: Unit and integration tests were not fully implemented.Scalability: Database indexing and caching strategies were deferred.🚀 Future WorkFeatures: Peer-to-peer reviews, automated review cycles, email notifications, and an analytics dashboard.Technical Improvements: Docker containerization, CI/CD pipeline setup, and API documentation using Swagger.Security: Rate limiting, security hardening, and improved error handling.
