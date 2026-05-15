@@ -1,0 +1,90 @@
+generator client {
+  provider     = "prisma-client-js"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("employee") // "employee" or "manager"
+  managerId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  manager       User?         @relation("ManagerEmployee", fields: [managerId], references: [id])
+  directReports User[]        @relation("ManagerEmployee")
+  goals         Goal[]
+  createdCycles ReviewCycle[]
+  reviews       Review[]      @relation("EmployeeReviews")
+  givenReviews  Review[]      @relation("ManagerReviews")
+
+  @@map("users")
+}
+
+model ReviewCycle {
+  id        String   @id @default(uuid())
+  title     String
+  startDate DateTime
+  endDate   DateTime
+  status    String   @default("Open") // "Open", "Under Review", "Closed"
+  createdBy String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  creator User?    @relation(fields: [createdBy], references: [id])
+  goals   Goal[]
+  reviews Review[]
+
+  @@map("review_cycles")
+}
+
+model Goal {
+  id            String   @id @default(uuid())
+  title         String
+  description   String?
+  status        String   @default("Not Started") // "Not Started", "In Progress", "Completed"
+  weight        String   @default("Medium") // "Low", "Medium", "High"
+  progress      Int      @default(0) // 0-100
+  employeeId    String
+  reviewCycleId String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  employee    User        @relation(fields: [employeeId], references: [id])
+  reviewCycle ReviewCycle @relation(fields: [reviewCycleId], references: [id])
+
+  @@map("goals")
+}
+
+model Review {
+  id                        String    @id @default(uuid())
+  employeeId                String
+  managerId                 String
+  reviewCycleId             String
+  selfAssessmentText        String?
+  selfAssessmentSubmittedAt DateTime?
+  managerAssessmentText     String?
+  rating                    Int?
+  status                    String    @default("Pending") // "Pending", "Finalized"
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+  finalizedAt               DateTime?
+
+  // Relations
+  employee    User        @relation("EmployeeReviews", fields: [employeeId], references: [id])
+  manager     User        @relation("ManagerReviews", fields: [managerId], references: [id])
+  reviewCycle ReviewCycle @relation(fields: [reviewCycleId], references: [id])
+
+  @@unique([employeeId, reviewCycleId])
+  @@map("reviews")
+}
