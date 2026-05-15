@@ -119,7 +119,7 @@ Express provides a lightweight and scalable backend architecture suitable for RE
 
 ## Database / Storage Layer
 
-- MongoDB
+- SQLite
 
 ### Why?
 
