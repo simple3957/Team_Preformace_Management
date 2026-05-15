@@ -270,14 +270,6 @@ Database indexing and caching strategies were deferred.
 
 ---
 
-## Technical Improvements
-
-- Docker containerization
-- CI/CD pipeline setup
-- API documentation using Swagger
-
----
-
 ## Security
 
 - Rate limiting
